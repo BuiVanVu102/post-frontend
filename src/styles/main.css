@@ -74,3 +74,10 @@ ul {
   width: auto;
   filter: invert(21%) sepia(100%) saturate(2267%) hue-rotate(326deg) brightness(88%) contrast(97%);
 }
+
+.nav-link {
+  color: var(--primary-color);
+}
+.nav-link:hover {
+  color: var(--primary-color);
+}
