@@ -37,6 +37,13 @@ export function createNewElement(post: any): any {
       thumbnailElement.src = 'https://via.placeholder.com/1360x400?text=Thumbnail'
     })
   }
+
+  //handle Click to details-page
+  const theFirstLiElement = liElement?.firstElementChild
+  theFirstLiElement &&
+    theFirstLiElement.addEventListener('click', () => {
+      window.location.assign(`/post-detail.html?id=${post.id}`)
+    })
   //return
   return liElement
 }
