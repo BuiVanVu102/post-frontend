@@ -31,8 +31,9 @@ export function initPagination({ elementId, defaultParams, onchange }: any) {
   if (prevLink)
     prevLink.addEventListener('click', (e: any) => {
       e.preventDefault()
-      const page: any = ulPagination.dataset.page || 1
-      if (page >= 2) onchange?.(page - 1)
+      const page: any = ulPagination.dataset.page
+      if (page === 1) return
+      if (page > 2) onchange?.(page - 1)
     })
   const nextLink = ulPagination.lastElementChild?.lastElementChild
   if (nextLink)
