@@ -1,7 +1,14 @@
 import dayjs from 'dayjs'
 import { PostAPI } from './api/postAPI'
+import { registerLightbox } from './models/LightBox'
 import { setTextContent } from './utils'
 ;(async () => {
+  registerLightbox({
+    modalId: 'lightbox',
+    imgSelector: 'img[data-id="lightboxImg"]',
+    prevSelector: 'button[data-id="lightboxPrev"]',
+    nextSelector: 'button[data-id="lightboxNext"]',
+  })
   /**
    * @todo :
    * get post id from URL
@@ -15,6 +22,7 @@ import { setTextContent } from './utils'
       console.error('Post Not Found')
       return
     }
+
     const post: any = await PostAPI.getById(postId)
     handleRenderPostDetail(post)
   } catch (error) {
