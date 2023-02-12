@@ -1,9 +1,8 @@
-import { getIconHome } from './utils/selector'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { PostAPI } from './api/postAPI'
 import { handleData, handlePagination, initPagination, initSearch } from './models'
-import { initURL } from './utils'
+import { getIconHome } from './utils/selector'
 
 dayjs.extend(relativeTime)
 ;(async () => {
