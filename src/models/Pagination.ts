@@ -33,7 +33,7 @@ export function initPagination({ elementId, defaultParams, onchange }: any) {
       e.preventDefault()
       const page: any = ulPagination.dataset.page
       if (page === 1) return
-      if (page > 2) onchange?.(page - 1)
+      if (page >= 2) onchange?.(page - 1)
     })
   const nextLink = ulPagination.lastElementChild?.lastElementChild
   if (nextLink)
@@ -42,7 +42,6 @@ export function initPagination({ elementId, defaultParams, onchange }: any) {
       const page: any = ulPagination?.dataset.page || 1
       const maxPage: any = ulPagination?.dataset.maxPage
       if (page >= maxPage) return
-
       onchange(Number.parseInt(page) + 1)
     })
 }

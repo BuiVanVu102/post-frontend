@@ -52,7 +52,10 @@ export async function handleFilterChange(filterName: string, filterValue: number
     //fetch APIs
     const { data, pagination } = await PostAPI.getAll(url.searchParams)
     handleData(data)
-    handlePagination(pagination)
+    handlePagination({
+      elementId: 'postsPagination',
+      pagination: pagination,
+    })
   } catch (error) {
     console.error('Failed to fetch post list', error)
   }
