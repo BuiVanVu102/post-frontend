@@ -31,9 +31,7 @@ export const handleOnChangeForm = ({ formId, defaultValue, onSubmit }: any) => {
     isSubmitting = true
     //why do it, Because PROMISE value return truthy so must wait = solution using await
     const awaits = await validatePostForm(form, formValue)
-    if (!awaits) return
-
-    await onSubmit?.(formValue)
+    if (awaits) await onSubmit?.(formValue)
 
     unableButton()
     isSubmitting = false
