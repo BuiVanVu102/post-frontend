@@ -7,16 +7,36 @@ export const handleOnChangeForm = ({ formId, defaultValue, onSubmit }: any) => {
 
   handleForm(form, defaultValue)
 
+  //get selector button
+  const buttonElement: any = form.querySelector('[name="button"]')
+  const disabledButton = () => {
+    buttonElement.disable = true
+    buttonElement.textContent = 'Saving....'
+  }
+  const unableButton = () => {
+    buttonElement.disable = false
+    buttonElement.textContent = 'Save'
+  }
+  //ngan chan js bang var flag
+  let isSubmitting = false
+
   form.addEventListener('submit', async (event: any) => {
     event.preventDefault()
+    //check submit
+    if (isSubmitting) return
     const formValue: any = getFormValue(form)
     formValue.id = defaultValue.id
 
+    disabledButton()
+    isSubmitting = true
     //why do it, Because PROMISE value return truthy so must wait = solution using await
     const awaits = await validatePostForm(form, formValue)
     if (!awaits) return
 
-    onSubmit?.(formValue)
+    await onSubmit?.(formValue)
+
+    unableButton()
+    isSubmitting = false
   })
 }
 
