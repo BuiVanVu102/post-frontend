@@ -1,3 +1,6 @@
+import 'bootstrap/dist/css/bootstrap.css'
+import { Modal } from 'bootstrap'
+
 export const registerLightbox = ({ modalId, imgSelector, prevSelector, nextSelector }: any) => {
   const modalElement: any = document.getElementById(modalId)
   if (!modalElement) return
@@ -53,7 +56,7 @@ export const registerLightbox = ({ modalId, imgSelector, prevSelector, nextSelec
 }
 
 function onShowModal(modalElement: any) {
-  const modal = new bootstrap.Modal(modalElement, {
+  const modal = new Modal(modalElement, {
     keyboard: false,
   })
   if (modal) modal.show()
