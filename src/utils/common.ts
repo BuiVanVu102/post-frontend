@@ -17,3 +17,18 @@ export function initURL() {
   if (!url.searchParams.get('_limit')) url.searchParams.set('_limit', 6)
   return history.pushState({}, '', url)
 }
+
+//form
+
+export function setFieldValue(form: any, selector: any, value: any) {
+  if (!form) return
+  const field = form.querySelector(selector)
+  if (field) field.value = value
+}
+
+export function setBackgroundImage(document: any, selector: any, value: any) {
+  if (!document) return
+  const backgroundImg = document.querySelector(selector)
+
+  if (backgroundImg) backgroundImg.style.backgroundImage = `url("${value}")`
+}

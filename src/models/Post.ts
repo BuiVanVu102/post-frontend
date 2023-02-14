@@ -41,9 +41,23 @@ export function createNewElement(post: any): any {
   //handle Click to details-page
   const theFirstLiElement = liElement?.firstElementChild
   theFirstLiElement &&
-    theFirstLiElement.addEventListener('click', () => {
+    theFirstLiElement.addEventListener('click', (e: any) => {
+      console.log('cao target', e.target)
+      //solution 2 check parent has children?
+      const menu = liElement.querySelector('[data-id="menu"]')
+      console.log('menu', menu)
+      if (menu && menu.contains(e.target)) return
+
       window.location.assign(`/post-detail.html?id=${post.id}`)
     })
+  //handle click to children
+  const editButton = liElement.querySelector('[data-id="edit"]')
+  if (editButton) {
+    editButton.addEventListener('click', () => {
+      // e.stopPropagation() solution 1: should limit use
+      window.location.assign(`/add-edit-post.html?id=${post.id}`)
+    })
+  }
   //return
   return liElement
 }
