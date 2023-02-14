@@ -1,5 +1,5 @@
 import { PostAPI } from './api/postAPI'
-import { handleOnChangeForm } from './models'
+import { handleOnChangeForm, ToastifyInfo } from './models'
 ;(async () => {
   try {
     const queryParams = new URLSearchParams(window.location.search)
@@ -25,8 +25,12 @@ import { handleOnChangeForm } from './models'
 async function handleSubmitForm(value: any) {
   try {
     const newPostData = value.id ? await PostAPI.update(value) : await PostAPI.add(value)
-    window.location.assign(`/post-detail.html?id=${newPostData.id}`)
-  } catch (error) {
+    newPostData && ToastifyInfo.success('Successfully!!!!')
+    setTimeout(() => {
+      window.location.assign(`/post-detail.html?id=${newPostData.id}`)
+    }, 2000)
+  } catch (error: any) {
     console.error('failed when call API', error)
+    ToastifyInfo.error(`Error: ${error.message}`)
   }
 }
