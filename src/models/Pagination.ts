@@ -27,7 +27,7 @@ export function initPagination({ elementId, defaultParams, onchange }: any) {
   if (!ulPagination) return
 
   const prevLink = ulPagination.firstElementChild?.firstElementChild
-
+  console.log(defaultParams)
   if (prevLink)
     prevLink.addEventListener('click', (e: any) => {
       e.preventDefault()
