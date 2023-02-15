@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { PostAPI } from './api/postAPI'
-import { handleData, handlePagination, initPagination, initSearch } from './models'
+import { handleData, handlePagination, initPagination, initSearch, ToastifyInfo } from './models'
 import { getIconHome } from './utils/selector'
 
 dayjs.extend(relativeTime)
@@ -14,6 +14,9 @@ dayjs.extend(relativeTime)
       queryParams.searchParams.set('_limit', 6)
     }
     history.pushState({}, '', queryParams)
+    //take event form parent
+    resisterPostDeleteEvent()
+
     //back Home
     handleBackHome()
     //init Params
@@ -41,11 +44,11 @@ dayjs.extend(relativeTime)
 })()
 
 //handle Filter change
-export async function handleFilterChange(filterName: string, filterValue: number | string) {
+export async function handleFilterChange(filterName?: string, filterValue?: number | string) {
   try {
     const url: any = new URL(window.location.href)
+    if (filterName) url.searchParams.set(filterName, filterValue)
     if (filterName === 'title_like') url.searchParams.set('_page', 1)
-    url.searchParams.set(filterName, filterValue)
 
     history.pushState({}, '', url)
 
@@ -83,5 +86,22 @@ function handleBackHome() {
       elementId: 'postsPagination',
       pagination: pagination,
     })
+  })
+}
+
+function resisterPostDeleteEvent() {
+  document.addEventListener('post-remove', async (event: any) => {
+    try {
+      if (window.confirm('Are u sure')) {
+        const post = event.detail
+        await PostAPI.remove(post.id)
+        await handleFilterChange()
+
+        ToastifyInfo.success('Delete Successfully')
+      }
+    } catch (error: any) {
+      console.error(error.message)
+      ToastifyInfo.error(error.message)
+    }
   })
 }

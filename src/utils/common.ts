@@ -32,3 +32,12 @@ export function setBackgroundImage(document: any, selector: any, value: any) {
 
   if (backgroundImg) backgroundImg.style.backgroundImage = `url("${value}")`
 }
+
+//write function script take any number return random number form 0 to any number using typescript and i need check condition
+export function randomNumber(max: number): number {
+  if (max < 0) {
+    throw new Error('Max must be greater than 0')
+  }
+
+  return Math.floor(Math.random() * max)
+}

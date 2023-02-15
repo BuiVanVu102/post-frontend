@@ -1,11 +1,19 @@
 import * as yup from 'yup'
-import { setBackgroundImage, setFieldValue, setTextContent } from '../utils'
+import { randomNumber, setBackgroundImage, setFieldValue, setTextContent } from '../utils'
+
+function initRandomImage(form: any) {
+  const randomImage = document.getElementById('postChangeImage')
+  if (!randomImage) return
+  randomImage.addEventListener('click', () => {
+    const imageUrl = `https://picsum.photos/id/${randomNumber(1000)}/1368/400`
+    setFieldValue(form, '[name="imageUrl"]', imageUrl)
+    setBackgroundImage(document, '#postHeroImage', imageUrl)
+  })
+}
 
 export const handleOnChangeForm = ({ formId, defaultValue, onSubmit }: any) => {
   const form = document.getElementById(formId)
   if (!form) return
-
-  handleForm(form, defaultValue)
 
   //get selector button
   const buttonElement: any = form.querySelector('[name="button"]')
@@ -19,7 +27,9 @@ export const handleOnChangeForm = ({ formId, defaultValue, onSubmit }: any) => {
   }
   //ngan chan js bang var flag
   let isSubmitting = false
-
+  handleForm(form, defaultValue)
+  //init event
+  initRandomImage(form)
   form.addEventListener('submit', async (event: any) => {
     event.preventDefault()
     //check submit
@@ -76,6 +86,10 @@ function getPostSchema() {
         (value) => value.split(' ').filter((x: any) => !!x && x.length >= 3).length >= 2
       ),
     description: yup.string(),
+    imageUrl: yup
+      .string()
+      .required('Please enter a background image')
+      .url('Please enter a valid url'),
   })
 }
 
@@ -90,7 +104,7 @@ function setFieldError(form: any, name: any, error: any) {
 async function validatePostForm(form: any, formValue: any) {
   try {
     //reset , pervious errors
-    ;['title', 'author'].forEach((name: any) => setFieldError(form, name, ''))
+    ;['title', 'author', 'imageUrl'].forEach((name: any) => setFieldError(form, name, ''))
     const schema = getPostSchema()
     await schema.validate(formValue, { abortEarly: false })
   } catch (error: any) {
