@@ -42,20 +42,31 @@ export function createNewElement(post: any): any {
   const theFirstLiElement = liElement?.firstElementChild
   theFirstLiElement &&
     theFirstLiElement.addEventListener('click', (e: any) => {
-      console.log('cao target', e.target)
       //solution 2 check parent has children?
       const menu = liElement.querySelector('[data-id="menu"]')
-      console.log('menu', menu)
       if (menu && menu.contains(e.target)) return
 
       window.location.assign(`/post-detail.html?id=${post.id}`)
     })
-  //handle click to children
+  //handle click edit to children
   const editButton = liElement.querySelector('[data-id="edit"]')
   if (editButton) {
     editButton.addEventListener('click', () => {
       // e.stopPropagation() solution 1: should limit use
       window.location.assign(`/add-edit-post.html?id=${post.id}`)
+    })
+  }
+  //handle click edit to children
+  const removeButton = liElement.querySelector('[data-id="remove"]')
+  if (removeButton) {
+    removeButton.addEventListener('click', () => {
+      // e.stopPropagation() solution 1: should limit use
+      const customEvent = new CustomEvent('post-remove', {
+        bubbles: true,
+        detail: post,
+      })
+
+      removeButton.dispatchEvent(customEvent)
     })
   }
   //return

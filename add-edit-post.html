@@ -84,6 +84,9 @@
             <div class="form-group mb-3">
               <label for="postDescription">Description</label>
               <textarea class="form-control" name="description" rows="3"></textarea>
+              <div class="invalid-feedback">
+                Please enter author of this post!
+              </div>
             </div>
 
             <div class="form-group mb-3">
@@ -94,11 +97,14 @@
                 random image.
               </small>
 
-              <input type="hidden" name="imageURL">
+              <input type="text" name="imageURL" class="d-none">
 
               <button type="button" id="postChangeImage" class="btn btn-dark">
                 Change post image
               </button>
+              <div class="invalid-feedback">
+                Please enter author of this post!
+              </div>
             </div>
 
             <div class="text-center">
